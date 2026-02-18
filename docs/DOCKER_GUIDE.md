@@ -42,4 +42,4 @@ docker exec -it yool-db mysql -u root -ppassword yool_station_db
 - **Réinitialiser tout** : `docker-compose down -v` (Attention : Supprime la BDD)
 
 ---
-*Note : Pour le déploiement de l'Agent (.exe), référez-vous au [USER_GUIDE.md](USER_GUIDE.md) principal.*
+*Note : Pour le déploiement de l'Agent (.exe), référez-vous au guide [DOCUMENTATION.md](./DOCUMENTATION.md) principal.*

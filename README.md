@@ -30,10 +30,12 @@
 │   └── stop_all.bat      # Script de nettoyage des processus
 ├── .ps1/                 # Branche de développement (Automatisation)
 ├── docs/                 # Documentation technique détaillée
-│   ├── TECHNICAL_DEPLOYMENT.md
-│   ├── DOCKER_GUIDE.md
-│   ├── SSO_TECHNICAL_V3.md
-│   └── ...
+│   ├── DOCUMENTATION.md      # Guide principal (Installation & Usage)
+│   ├── TECHNICAL_DEPLOYMENT.md # Déploiement Production / Kiosk
+│   ├── DOCKER_GUIDE.md       # Backend & BDD via Docker
+│   ├── SSO_TECHNICAL_V3.md   # Spécifications JWT & SSO
+│   ├── API_REFERENCE.md      # Référence des points d'entrée API
+│   └── DATABASE_SCHEMA.md    # Modèle de données MySQL
 ├── database/             # Schémas SQL et exemples
 └── docker-compose.yml    # Orchestration Backend + MySQL
 ```

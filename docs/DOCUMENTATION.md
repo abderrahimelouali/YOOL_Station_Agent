@@ -35,7 +35,7 @@ Pour un déploiement instantané du Backend et de la Base de données :
 ```bash
 docker-compose up -d --build
 ```
-Consultez le [**DOCKER_GUIDE.md**](file:///c:/Users/eloua/Desktop/YOOL/AgentPost/DOCKER_GUIDE.md) pour plus de détails sur la configuration des conteneurs.
+Consultez le [**DOCKER_GUIDE.md**](./DOCKER_GUIDE.md) pour plus de détails sur la configuration des conteneurs.
 
 ---
 
