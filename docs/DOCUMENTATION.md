@@ -10,9 +10,9 @@ Le système repose sur une architecture en trois couches pour garantir une sécu
 
 ```mermaid
 graph LR
-    A[Station Agent (Poste)] -- "Authentification Station (Clé + ID)" --> B[Station Server (Local/Central)]
-    B -- "Vérification Carte (Proxy)" --> C[Module 1 (Backend Principal)]
-    B -- "Logs & Sessions" --> D[Base de Données (MySQL)]
+    A["Station Agent (Poste)"] -->|"Authentification Station (Clé + ID)"| B["Station Server (Local/Central)"]
+    B -->|"Vérification Carte (Proxy)"| C["Module 1 (Backend Principal)"]
+    B -->|"Logs & Sessions"| D["Base de Données (MySQL)"]
 ```
 
 ### Structure des données (BDD) :
