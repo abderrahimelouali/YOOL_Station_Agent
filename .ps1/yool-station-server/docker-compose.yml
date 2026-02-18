@@ -1,0 +1,62 @@
+# =============================================================================
+# YOOL STATION - DOCKER COMPOSE (PRODUCTION)
+# =============================================================================
+# Lance le serveur Node.js + Base de données MySQL
+
+version: '3.8'
+
+services:
+  # Base de Données MySQL
+  mysql:
+    image: mysql:8.0
+    container_name: yool_mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:-yool_root_2024}
+      MYSQL_DATABASE: ${DB_NAME:-yool_station_db}
+      MYSQL_USER: ${DB_USER:-yool_user}
+      MYSQL_PASSWORD: ${DB_PASSWORD:-yool_pass_2024}
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - yool_network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      timeout: 5s
+      retries: 10
+
+  # Serveur Node.js API
+  server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: yool_server
+    restart: always
+    ports:
+      - "${PORT:-3000}:3000"
+    environment:
+      NODE_ENV: production
+      PORT: 3000
+      DB_HOST: mysql
+      DB_USER: ${DB_USER:-yool_user}
+      DB_PASSWORD: ${DB_PASSWORD:-yool_pass_2024}
+      DB_NAME: ${DB_NAME:-yool_station_db}
+      DB_PORT: 3306
+      JWT_SECRET: ${JWT_SECRET:-your_jwt_secret_change_me}
+      SSO_API_URL: ${SSO_API_URL:-https://certifications.web4jobs.ma/api}
+      SSO_SERVER_SECRET: ${SSO_SERVER_SECRET:-secret_shared_with_laravel}
+    depends_on:
+      mysql:
+        condition: service_healthy
+    networks:
+      - yool_network
+
+# Réseau Docker interne
+networks:
+  yool_network:
+    driver: bridge
+
+# Volume persistant pour MySQL
+volumes:
+  mysql_data:

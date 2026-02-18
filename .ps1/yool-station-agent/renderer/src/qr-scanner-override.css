@@ -1,0 +1,31 @@
+/* CSS pour masquer les éléments de branding html5-qrcode */
+
+/* Masquer "Powered by ScanApp" */
+#qr-reader__dashboard_section_csr>div>div>a {
+    display: none !important;
+}
+
+/* Masquer tout le footer avec les liens */
+#qr-reader__dashboard_section_csr {
+    display: none !important;
+}
+
+/* Masquer "Report issues" */
+#qr-reader__dashboard_section_csr>div>div>span {
+    display: none !important;
+}
+
+/* Masquer le bouton de sélection de fichier */
+#html5-qrcode-button-file-selection {
+    display: none !important;
+}
+
+/* Masquer complètement la section file upload */
+#qr-reader__dashboard_section_fsr {
+    display: none !important;
+}
+
+/* Améliorer l'espacement sans le footer */
+#qr-reader__scan_region {
+    margin-bottom: 10px !important;
+}

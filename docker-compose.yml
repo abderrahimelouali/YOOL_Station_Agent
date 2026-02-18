@@ -1,0 +1,37 @@
+version: '3.8'
+
+services:
+  # Base de données MySQL
+  db:
+    image: mysql:8.0
+    container_name: yool-db
+    restart: always
+    environment:
+      MYSQL_DATABASE: yool_station_db
+      MYSQL_ROOT_PASSWORD: password
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+
+  # Serveur API Node.js
+  server:
+    build: ./yool-station-server
+    container_name: yool-server
+    restart: always
+    ports:
+      - "3000:3000"
+    environment:
+      - PORT=3000
+      - DB_HOST=db
+      - DB_USER=root
+      - DB_PASSWORD=password
+      - DB_NAME=yool_station_db
+      - DB_PORT=3306
+      - NODE_ENV=production
+      - JWT_SECRET=super_secret_jwt_key_yool_2024
+    depends_on:
+      - db
+
+volumes:
+  db_data:
