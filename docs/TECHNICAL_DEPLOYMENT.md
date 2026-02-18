@@ -253,7 +253,3 @@ docker-compose up -d --build
 - **.ps1** : Copier les nouveaux fichiers et `npm install`
 
 ---
-
-## 📞 Support
-
-Pour toute question : contact@yool.ma
