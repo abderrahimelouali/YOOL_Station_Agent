@@ -1,6 +1,14 @@
--- Schema Base de Données YOOL Station Agent
+-- ############################################################################
+-- YOOL STATION AGENT - DATABASE INITIALIZATION SCRIPT
+-- ############################################################################
+-- Ce script crée la base de données et toutes les tables nécessaires.
+-- ############################################################################
 
--- Table des stations (postes)
+-- 1. Création de la base de données
+CREATE DATABASE IF NOT EXISTS yool_station_db;
+USE yool_station_db;
+
+-- 2. Table des stations (postes)
 CREATE TABLE IF NOT EXISTS stations (
   id INT AUTO_INCREMENT PRIMARY KEY,
   station_code VARCHAR(50) NOT NULL UNIQUE, -- Identifiant unique (ex: STA-LAB1-01)
@@ -14,7 +22,7 @@ CREATE TABLE IF NOT EXISTS stations (
   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
--- Table des sessions (utilisations)
+-- 3. Table des sessions (utilisations)
 CREATE TABLE IF NOT EXISTS sessions (
   id INT AUTO_INCREMENT PRIMARY KEY,
   session_uuid VARCHAR(36) NOT NULL UNIQUE, -- UUID généré par le serveur
@@ -29,7 +37,7 @@ CREATE TABLE IF NOT EXISTS sessions (
   INDEX idx_active_sessions (station_id, status)
 );
 
--- Table des logs d'audit
+-- 4. Table des logs d'audit
 CREATE TABLE IF NOT EXISTS station_logs (
   id INT AUTO_INCREMENT PRIMARY KEY,
   station_id INT,

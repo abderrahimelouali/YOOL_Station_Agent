@@ -26,12 +26,9 @@ router.post('/stations/heartbeat', sessionController.heartbeat); // Signal de vi
 router.post('/stations/verify', sessionController.verifyProxy);   // Relais validation carte (Proxy)
 
 /**
- * ingestion des LOGS (Point d'extension)
- * --------------------------------------
+ * ingestion des LOGS (Point d'entrée conforme CDC)
+ * -----------------------------------------------
  */
-router.post('/logs', (req, res) => {
-    // Note: Peut être utilisé pour centraliser les logs de l'interface
-    res.json({ success: true });
-});
+router.post('/stations/logs', sessionController.saveLog);
 
 module.exports = router;

@@ -33,7 +33,7 @@ exports.verifyProxy = async (req, res) => {
     try {
         // 1. Authentification et Auto-enregistrement de la station
         let stations = await db.query('SELECT agent_key_hash, status FROM stations WHERE station_code = ?', [station_code]);
-        
+
         // Si la station est nouvelle, on l'inscrit automatiquement en mode 'pending'
         if (stations.length === 0) {
             const hash = await bcrypt.hash(agent_key, 10);
@@ -41,14 +41,14 @@ exports.verifyProxy = async (req, res) => {
             console.log(`[AUTH] Auto-enregistrement nouvelle station: ${station_code}`);
 
             await db.query(
-                'INSERT INTO stations (station_code, agent_key_hash, status, location) VALUES (?, ?, ?, ?)', 
+                'INSERT INTO stations (station_code, agent_key_hash, status, location) VALUES (?, ?, ?, ?)',
                 [station_code, hash, 'pending', defaultLocation]
             );
-            
-            return res.status(403).json({ 
-                success: false, 
+
+            return res.status(403).json({
+                success: false,
                 message: 'Poste en attente d\'activation (Pending). Contactez l\'admin.',
-                registered: true 
+                registered: true
             });
         }
 
@@ -75,7 +75,7 @@ exports.verifyProxy = async (req, res) => {
         const response = await axios.post(`${module1Url}/cards/verify`, {
             card_identifier,
             workspace_id,
-            agent_key: serverSecret 
+            agent_key: serverSecret
         });
 
         // On renvoie la réponse reçue directement à l'Agent UI
@@ -176,23 +176,23 @@ exports.endSession = async (req, res) => {
 
         // 2. Webhook de déconnexion (Synchronisation Cloud)
         const logoutUrlRaw = process.env.PLATFORM_LOGOUT_URL;
-        
+
         if (logoutUrlRaw) {
             /**
              * LOGIQUE HTTPS vs HTTP (Production)
              * En production, décommentez la ligne avec https:// et supprimez/commentez le http://
              */
             let finalLogoutUrl = logoutUrlRaw; // Valeur du .env par défaut
-            
+
             // --- CONFIGURATION PRODUCTION (HTTPS) ---
             // finalLogoutUrl = logoutUrlRaw.replace('http://', 'https://'); // FORCE HTTPS
             // -----------------------------------------
 
             const secret = process.env.JWT_SECRET || 'yool_default_secret_key';
-            const logoutToken = jwt.sign({ 
-                iss: 'yool-station-server', 
-                action: 'logout', 
-                sid: session_uuid 
+            const logoutToken = jwt.sign({
+                iss: 'yool-station-server',
+                action: 'logout',
+                sid: session_uuid
             }, secret, { expiresIn: '1m' });
 
             // Envoi de la requête de déconnexion en arrière-plan
@@ -216,7 +216,7 @@ exports.endSession = async (req, res) => {
  */
 exports.heartbeat = async (req, res) => {
     const { station_code, agent_key } = req.body;
-    
+
     if (!station_code || !agent_key) return res.status(400).json({ success: false });
 
     try {
@@ -227,6 +227,32 @@ exports.heartbeat = async (req, res) => {
         }
         res.status(401).json({ success: false });
     } catch (error) {
+        res.status(500).json({ success: false });
+    }
+};
+/**
+ * ENREGISTREMENT DES LOGS GÉNÉRIQUES
+ * ----------------------------------
+ */
+exports.saveLog = async (req, res) => {
+    const { station_code, log_type, category, message } = req.body;
+
+    if (!station_code || !message) {
+        return res.status(400).json({ success: false, message: 'Données de log incomplètes' });
+    }
+
+    try {
+        const stations = await db.query('SELECT id FROM stations WHERE station_code = ?', [station_code]);
+        const stationId = stations.length > 0 ? stations[0].id : null;
+
+        await db.query(
+            'INSERT INTO station_logs (station_id, log_type, category, message) VALUES (?, ?, ?, ?)',
+            [stationId, log_type || 'info', category || 'system', message]
+        );
+
+        res.json({ success: true });
+    } catch (error) {
+        console.error('[LOG ERROR]', error.message);
         res.status(500).json({ success: false });
     }
 };
