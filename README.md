@@ -7,52 +7,63 @@
 
 ---
 
-## 🚀 Guide d'Installation Rapide
+## 🌟 Points Forts
 
-Pour une installation pas à pas, veuillez consulter notre nouveau guide :
-👉 **[SETUP_GUIDE.md](./docs/SETUP_GUIDE.md)**
+- **Total Kiosk Experience** : Verrouillage complet de Windows (Kiosk mode, Fullscreen, Blocage des raccourcis Alt+F4, Alt+Tab, Touche Windows).
+- **Dual-Branch Architecture** : 
+  - **`/exe`** : Version prête pour la production avec installation optimisée.
+  - **`/.ps1`** : Version pour le développement et l'automatisation avancée.
+- **Smart Focus** : Système de redirection intelligente du focus pour les douchettes de scan externes.
+- **SSO Intégré** : Authentification fluide via JWT avec protection anti-replay complète (JTI).
+- **Docker-Ready** : Backend et base de données isolés via Docker pour un déploiement éclair.
+- **Design Premium** : Interface moderne, minimalist et responsive (React + Vite).
 
 ---
 
 ## 📁 Structure du Projet
 
 ```bash
-├── YOOL_Station_App/     # Branche principale de développement
-│   ├── yool-station-agent # Client Electron
-│   ├── yool-station-server # Backend API
-│   └── silent_launch.vbs  # Lancement silencieux (Auto-run)
-├── docs/                 # Documentation technique unifiée
-│   ├── SETUP_GUIDE.md       # Installation et configuration
-│   ├── DOCUMENTATION.md     # Architecture, API, BDD et Sécurité
-│   └── SSO_TECHNICAL_V3.md  # Détails techniques SSO & JWT
-├── database/             # Schémas SQL
-│   └── setup_database.sql   # Script d'initialisation automatique
+├── exe/                  # Branche de production principale
+│   ├── build_ui/         # Frontend compilé (Vite)
+│   ├── release/          # Exécutables et Installeurs (win-unpacked)
+│   ├── main/             # Processus Electron (Système)
+│   └── stop_all.bat      # Script de nettoyage des processus
+├── .ps1/                 # Branche de développement (Automatisation)
+├── docs/                 # Documentation technique détaillée
+│   ├── DOCUMENTATION.md      # Guide principal (Installation & Usage)
+│   ├── TECHNICAL_DEPLOYMENT.md # Déploiement Production / Kiosk
+│   ├── DOCKER_GUIDE.md       # Backend & BDD via Docker
+│   ├── SSO_TECHNICAL_V3.md   # Spécifications JWT & SSO
+│   ├── API_REFERENCE.md      # Référence des points d'entrée API
+│   └── DATABASE_SCHEMA.md    # Modèle de données MySQL
+├── database/             # Schémas SQL et exemples
+└── docker-compose.yml    # Orchestration Backend + MySQL
 ```
 
 ---
 
-## 🚀 Démarrage
+## 🚀 Démarrage Rapide
 
-### 1. Installation des Dépendances
-Naviguez dans les dossiers `YOOL_Station_App/yool-station-agent` et `YOOL_Station_App/yool-station-server` et exécutez :
-```bash
-npm install
-npm audit fix
+### 1. Backend (Docker)
+Assurez-vous d'avoir Docker installé, puis :
+```powershell
+docker-compose up -d
 ```
 
-### 2. Base de Données
-Initialisez votre base de données avec le script :
-`database/setup_database.sql`
+### 2. Agent Station (Production)
+Allez dans le dossier `exe/yool-station-agent` et lancez le build :
+```powershell
+npm run build
+```
+L'application prête à l'emploi se trouvera dans `release/win-unpacked/YOOL Scan Station.exe`.
 
 ---
 
 ## 🛠️ Maintenance & Sécurité
 
-- **Démarrage Rapide** : Double-cliquez sur `YOOL_Station_App/silent_launch.vbs` pour tout lancer en arrière-plan.
-### 6. Arrêt du Projet
-Pour tout arrêter en un seul clic, **double-cliquez** sur le fichier `stop_all.bat` situé dans le dossier `YOOL_Station_App/`.
-- **Auto-Start** : Voir [DOCUMENTATION.md](./docs/DOCUMENTATION.md) pour configurer le démarrage automatique avec Windows.
-- **Logs** : Les logs du serveur sont disponibles dans `YOOL_Station_App/yool-station-server/logs/`.
+- **Arrêt Propre** : Utilisez toujours le script `stop_all.bat` dans le dossier `/exe` pour fermer l'agent et le serveur proprement.
+- **Auto-Start** : Voir [TECHNICAL_DEPLOYMENT.md](./docs/TECHNICAL_DEPLOYMENT.md) pour configurer le démarrage automatique avec Windows.
+- **Logs** : Les logs du serveur sont disponibles dans le dossier `logs/` généré à la racine du serveur.
 
 ---
 *Fait avec ❤️ pour une expérience utilisateur sans faille.*

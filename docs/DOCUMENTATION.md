@@ -100,8 +100,8 @@ Le Station Server agit comme un relais (Proxy) sécurisé entre l'Agent UI et le
 Conformément au cahier des charges, l'agent doit se lancer au démarrage pour verrouiller le poste immédiatement :
 
 1.  **Configuration du Démarrage (Auto-Run)** :
-    *   Appuyez sur `Win + R`, tapez `shell:startup` et validez.
-    *   Créez un raccourci vers le script `YOOL_Station_App/silent_launch.vbs` et déposez-le dans ce dossier.
+    *   **Méthode Automatisée (RECOMMANDÉE)** : Double-cliquez sur `INSTALL_AUTO_RUN.bat` à la racine du projet. Cela créera le raccourci nécessaire dans votre dossier de démarrage Windows.
+    *   **Méthode Manuelle** : Appuyez sur `Win + R`, tapez `shell:startup`, validez, et créez un raccourci vers `YOOL_Station_App/silent_launch.vbs`.
     *   Au redémarrage, le serveur et l'interface de scan se lanceront automatiquement en mode plein écran.
 
 2.  **🔒 Sécurité Kiosk Totale** :
