@@ -20,7 +20,7 @@ Pour une installation pas à pas, veuillez consulter notre nouveau guide :
 ├── YOOL_Station_App/     # Branche principale de développement
 │   ├── yool-station-agent # Client Electron
 │   ├── yool-station-server # Backend API
-│   └── silent_launch.vbs  # Lancement silencieux
+│   └── silent_launch.vbs  # Lancement silencieux (Auto-run)
 ├── docs/                 # Documentation technique unifiée
 │   ├── SETUP_GUIDE.md       # Installation et configuration
 │   ├── DOCUMENTATION.md     # Architecture, API, BDD et Sécurité
@@ -34,7 +34,7 @@ Pour une installation pas à pas, veuillez consulter notre nouveau guide :
 ## 🚀 Démarrage
 
 ### 1. Installation des Dépendances
-Naviguez dans les dossiers `.ps1/yool-station-agent` et `.ps1/yool-station-server` et exécutez :
+Naviguez dans les dossiers `YOOL_Station_App/yool-station-agent` et `YOOL_Station_App/yool-station-server` et exécutez :
 ```bash
 npm install
 npm audit fix
@@ -48,9 +48,11 @@ Initialisez votre base de données avec le script :
 
 ## 🛠️ Maintenance & Sécurité
 
-- **Arrêt Propre** : Utilisez le script `stopall.bat` à la racine pour fermer les processus proprement.
-- **Auto-Start** : Voir [TECHNICAL_DEPLOYMENT.md](./docs/TECHNICAL_DEPLOYMENT.md) pour configurer le démarrage automatique avec Windows.
-- **Logs** : Les logs du serveur sont disponibles dans le dossier `logs/` généré à la racine du serveur.
+- **Démarrage Rapide** : Double-cliquez sur `YOOL_Station_App/silent_launch.vbs` pour tout lancer en arrière-plan.
+### 6. Arrêt du Projet
+Pour tout arrêter en un seul clic, **double-cliquez** sur le fichier `stop_all.bat` situé dans le dossier `YOOL_Station_App/`.
+- **Auto-Start** : Voir [DOCUMENTATION.md](./docs/DOCUMENTATION.md) pour configurer le démarrage automatique avec Windows.
+- **Logs** : Les logs du serveur sont disponibles dans `YOOL_Station_App/yool-station-server/logs/`.
 
 ---
 *Fait avec ❤️ pour une expérience utilisateur sans faille.*

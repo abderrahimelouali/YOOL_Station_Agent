@@ -66,14 +66,15 @@ Ce script va :
 
 ### 5. Lancement du Projet
 
-Vous avez trois options pour lancer le projet :
-
 - **Option A (Développement)** :
   Lancez `npm run dev` dans chaque dossier.
 - **Option B (Automatisation)** :
   Lancez `./YOOL_Station_App/start.ps1` via PowerShell.
-- **Option C (Mode Silencieux)** :
-  Créez un raccourci vers `YOOL_Station_App/silent_launch.vbs` (situé dans le dossier `YOOL_Station_App`) et déposez-le dans ce dossier.
+- **Option C (Mode Silencieux - RECOMMANDÉ)** :
+  **Double-cliquez** simplement sur `YOOL_Station_App/silent_launch.vbs`. Tous les composants se lanceront en arrière-plan sans fenêtre PowerShell parasite.
+
+### 6. Arrêt du Projet
+Pour tout arrêter en un seul clic, **double-cliquez** sur le fichier `stopall.bat` situé à la racine du projet.
 
 ---
 

@@ -74,7 +74,7 @@ Le Station Server agit comme un relais (Proxy) sécurisé entre l'Agent UI et le
 - Electron (inclus dans les dépendances)
 
 ### Configuration du Serveur (Station Server)
-1.  Copiez `.env.example` vers `.env` dans le dossier `.ps1/yool-station-server`.
+1.  Copiez `.env.example` vers `.env` dans le dossier `YOOL_Station_App/yool-station-server`.
 2.  Configurez vos identifiants MySQL :
     ```env
     DB_HOST=localhost
@@ -91,17 +91,25 @@ Le Station Server agit comme un relais (Proxy) sécurisé entre l'Agent UI et le
     ```
 
 ### Configuration de l'Agent (Station Agent)
-1.  Copiez `.env.example` vers `.env` dans le dossier `.ps1/yool-station-agent`.
+1.  Copiez `.env.example` vers `.env` dans le dossier `YOOL_Station_App/yool-station-agent`.
 2.  `VITE_STATION_ID` : L'identifiant unique de ce poste (ex: `STA-001`).
 3.  `VITE_AGENT_KEY` : Une clé secrète complexe générée pour ce poste.
 4.  `VITE_SERVER_URL` : L'URL de votre Station Server (ex: `http://localhost:3000`).
 
-### 🚀 Lancement Automatique (Windows 10)
-Conformément au cahier des charges, l'agent doit se lancer au démarrage du poste :
-1.  **Méthode Recommandée** :
+### 🚀 Lancement Automatique & Mode Kiosk (Windows 10)
+Conformément au cahier des charges, l'agent doit se lancer au démarrage pour verrouiller le poste immédiatement :
+
+1.  **Configuration du Démarrage (Auto-Run)** :
     *   Appuyez sur `Win + R`, tapez `shell:startup` et validez.
-    *   Créez un raccourci vers le script `silent_launch.vbs` (situé dans le dossier `YOOL_Station_App`) et déposez-le dans ce dossier.
-2.  **Vérification** : Redémarrez le poste. Le serveur et l'agent se lanceront automatiquement en arrière-plan.
+    *   Créez un raccourci vers le script `YOOL_Station_App/silent_launch.vbs` et déposez-le dans ce dossier.
+    *   Au redémarrage, le serveur et l'interface de scan se lanceront automatiquement en mode plein écran.
+
+2.  **🔒 Sécurité Kiosk Totale** :
+    *   L'application Electron est configurée pour le mode **Kiosk** (plein écran permanent).
+    *   Pour une sécurité maximale (blocage de `Alt+Tab`, `Win`, `Alt+F4`), assurez-vous que les options de sécurité sont décommentées dans `YOOL_Station_App/yool-station-agent/main/index.js`.
+    *   Le système est conçu pour qu'aucune carte valide = poste verrouillé.
+
+3.  **Vérification** : Redémarrez le poste. L'écran de scan YOOL doit apparaître avant que l'utilisateur puisse accéder au bureau.
 
 ---
 
@@ -127,6 +135,9 @@ Pour activer la station :
 - **Auto-Verrouillage (Inactivité)** : Si le poste est inactif trop longtemps (configuré par `VITE_INACTIVITY_TIMEOUT`), il se reverrouille automatiquement, ferme la session locale et déclenche la déconnexion sur la plateforme YOOL.
 - **Déconnexion Manuelle** : L'utilisateur peut se déconnecter via le bouton dédié, ce qui provoque le verrouillage immédiat et le Single Logout (SSO).
 
+### Étape 4 : Maintenance (Arrêt total)
+Pour arrêter proprement tous les services (Serveur + Agent), **double-cliquez** sur `YOOL_Station_App/stop_all.bat`.
+
 ---
 
 ---
@@ -141,7 +152,7 @@ Cela signifie que la `VITE_AGENT_KEY` dans le fichier `.env` de l'agent ne corre
 **Solution** : Supprimez la ligne de la station dans la BDD pour qu'elle se ré-enregistre proprement avec sa nouvelle clé.
 
 ### 🔒 Sécurité Kiosk (Configuration Avancée)
-L'agent est configuré pour verrouiller le poste par défaut. Pour activer le verrouillage total des touches système (Alt+Tab, Win, Alt+F4), décommentez le bloc de sécurité dans `.ps1/yool-station-agent/main/index.js` (ligne ~170).
+L'agent est configuré pour verrouiller le poste par défaut. Pour activer le verrouillage total des touches système (Alt+Tab, Win, Alt+F4), décommentez le bloc de sécurité dans `YOOL_Station_App/yool-station-agent/main/index.js` (ligne ~170).
 
 ---
 
