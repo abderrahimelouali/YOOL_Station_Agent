@@ -2,7 +2,7 @@
 setlocal
 echo --------------------------------------------------
 echo ARRET CIBLE : YOOL STATION AGENT + STATION SERVER
-echo (Module 1 restera actif)
+echo (card system backend restera actif)
 echo --------------------------------------------------
 
 echo 1. Fermeture de l'Agent UI (Electron)...
@@ -16,6 +16,6 @@ for /f "tokens=5" %%a in ('netstat -aon ^| findstr :5174 ^| findstr LISTENING') 
 
 echo.
 echo ✅ Nettoyage termine. Les processus YOOL Station ont ete arretes.
-echo (Si Module 1 est sur le port 3001, il n'a pas été touché).
+echo (Si card system backend est sur le port 3001, il n'a pas été touché).
 echo.
 pause
