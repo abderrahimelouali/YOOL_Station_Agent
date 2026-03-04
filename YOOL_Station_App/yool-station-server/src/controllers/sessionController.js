@@ -20,7 +20,7 @@ const db = require('../config/database');
  * PROXY DE VÉRIFICATION DE CARTE
  * -----------------------------
  * Intercepte les demandes des agents locaux (badgeage), vérifie l'identité 
- * de la station (Agent Key), et relaie la demande au Module 1 (Backend Principal).
+ * de la station (Agent Key), et relaie la demande au Card System (Backend Principal).
  */
 exports.verifyProxy = async (req, res) => {
     const { station_code, agent_key, card_identifier, workspace_id } = req.body;
@@ -68,11 +68,11 @@ exports.verifyProxy = async (req, res) => {
         // Mise à jour de l'activité (last_seen)
         await db.query('UPDATE stations SET last_seen = NOW() WHERE station_code = ?', [station_code]);
 
-        // 4. Relais vers le Backend Principal (Module 1)
-        const module1Url = process.env.MODULE1_API_URL;
-        const serverSecret = process.env.MODULE1_SERVER_SECRET;
+        // 4. Relais vers le Backend Principal (Card System)
+        const cardSystemUrl = process.env.CARD_SYSTEM_API_URL;
+        const serverSecret = process.env.CARD_SYSTEM_SECRET;
 
-        const response = await axios.post(`${module1Url}/cards/verify`, {
+        const response = await axios.post(`${cardSystemUrl}/cards/verify`, {
             card_identifier,
             workspace_id,
             agent_key: serverSecret
@@ -84,7 +84,7 @@ exports.verifyProxy = async (req, res) => {
     } catch (error) {
         console.error('[PROXY ERROR]', error.message);
         const status = error.response?.status || 500;
-        const message = error.response?.data?.message || 'Erreur communication Module 1';
+        const message = error.response?.data?.message || 'Erreur communication Card System';
         res.status(status).json({ success: false, message, valid: false });
     }
 };
