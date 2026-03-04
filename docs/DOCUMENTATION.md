@@ -11,7 +11,7 @@ Le système repose sur une architecture en trois couches pour garantir une sécu
 ```mermaid
 graph LR
     A["Station Agent (Poste)"] -->|"Authentification Station (Clé + ID)"| B["Station Server (Local/Central)"]
-    B -->|"Vérification Carte (Proxy)"| C["Module 1 (Backend Principal)"]
+    B -->|"Vérification Carte (Proxy)"| C["Card System (Backend Principal)"]
     B -->|"Logs & Sessions"| D["Base de Données (MySQL)"]
 ```
 
@@ -51,7 +51,7 @@ Le Station Server agit comme un relais (Proxy) sécurisé entre l'Agent UI et le
 
 | Méthode | Endpoint | Description |
 | :--- | :--- | :--- |
-| `POST` | `/stations/verify` | Relais validation carte vers Module 1 (Proxy). |
+| `POST` | `/stations/verify` | Relais validation carte vers Card System (Proxy). |
 | `POST` | `/sessions/start` | Ouvre une session locale + Génère le Token JWT (SSO). |
 | `POST` | `/sessions/end` | Ferme la session + Déconnexion Cloud (Webhook). |
 | `POST` | `/stations/logs` | Enregistrement des logs système et d'audit. |
@@ -61,8 +61,8 @@ Le Station Server agit comme un relais (Proxy) sécurisé entre l'Agent UI et le
 ---
 
 ### Concepts Clés de Sécurité :
-1.  **Proxy Sécurisé** : L'Agent de station ne communique jamais directement avec le Module 1. Il passe par le **Station Server**.
-2.  **Secret Partagé** : La communication entre le Station Server et le Module 1 est authentifiée par une clé `MODULE1_SERVER_SECRET` inaccessible aux postes clients.
+1.  **Proxy Sécurisé** : L'Agent de station ne communique jamais directement avec le Card System. Il passe par le **Station Server**.
+2.  **Secret Partagé** : La communication entre le Station Server et le Card System est authentifiée par une clé `CARD_SYSTEM_SECRET` inaccessible aux postes clients.
 3.  **Hachage des Clés** : Les clés des stations (`AGENT_KEY`) sont stockées sous forme de hachage (BCrypt) en base de données. Même un accès à la BDD ne permet pas de connaître les clés en clair.
 4.  **Auto-Enregistrement** : Toute nouvelle station se connectant avec un nouvel ID est enregistrée avec le statut **`pending`** et une localisation par défaut (ex: `Tinghir`). Elle doit être validée manuellement pour devenir opérationnelle.
 
@@ -85,8 +85,8 @@ Le Station Server agit comme un relais (Proxy) sécurisé entre l'Agent UI et le
 3.  Configurez la sécurité et l'intégration :
     ```env
     JWT_SECRET=votre_secret_jwt_32_chars_minimum
-    MODULE1_API_URL=https://certifications.web4jobs.ma/api
-    MODULE1_SERVER_SECRET=votre_secret_partage_module1
+    CARD_SYSTEM_API_URL=https://certifications.web4jobs.ma/api
+    CARD_SYSTEM_SECRET=votre_secret_partage_card_system
     PLATFORM_LOGOUT_URL=https://certifications.web4jobs.ma/api/sso/logout
     ```
 
@@ -130,7 +130,7 @@ Pour activer la station :
 
 ### Étape 3 : Utilisation Quotidienne
 - **Scan de carte** : L'utilisateur scanne sa carte. L'agent demande au proxy de vérifier.
-- **Déverrouillage** : Si autorisé par le Module 1, le poste se déverrouille (l'application Electron se minimise).
+- **Déverrouillage** : Si autorisé par le Card System, le poste se déverrouille (l'application Electron se minimise).
 - **Session** : Une session est créée en base de données avec l'heure de début.
 - **Auto-Verrouillage (Inactivité)** : Si le poste est inactif trop longtemps (configuré par `VITE_INACTIVITY_TIMEOUT`), il se reverrouille automatiquement, ferme la session locale et déclenche la déconnexion sur la plateforme YOOL.
 - **Déconnexion Manuelle** : L'utilisateur peut se déconnecter via le bouton dédié, ce qui provoque le verrouillage immédiat et le Single Logout (SSO).
