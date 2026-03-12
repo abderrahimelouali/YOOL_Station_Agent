@@ -38,6 +38,11 @@ Pour simplifier l'utilisation quotidienne, utilisez les scripts situés à la ra
 - **Vérification** : L'agent station communique avec le **Card System** (Backend Principal) via le proxy local.
 - **Accès Refusé ?** : Assurez-vous que le `CARD_SYSTEM_SECRET` dans `YOOL_Station_App/yool-station-server/.env` correspond exactement au `AGENT_KEY` du Card System.
 - **Kiosk Mode** : L'application Electron est configurée pour verrouiller Windows et empêcher l'utilisation d'autres applications pendant la session.
+### 2. Agent Station (Production)
+Pour générer l'installateur Windows (.exe) :
+1.  Double-cliquez sur **`PREPARE_INSTALLER.bat`** à la racine.
+2.  Attendez la fin du processus.
+3.  L'application prête à l'emploi se trouvera dans : `YOOL_Station_App\yool-station-agent\release\YOOL Scan Station.exe`.
 
 ---
 *Fait avec ❤️ pour une expérience utilisateur sécurisée.*

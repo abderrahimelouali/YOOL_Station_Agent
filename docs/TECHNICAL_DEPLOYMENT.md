@@ -40,6 +40,7 @@ Chaque poste doit être configuré individuellement pour garantir l'isolation et
 
 - **OS** : Windows 10 (Recommandé).
 - **Mode Kiosk** : L'agent Electron se lance en plein écran et verrouille les raccourcis système.
+- **Génération Build** : Utilisation du script simplifié pour créer l'installateur.
 - **Auto-Run** : Utilisation du script automatisé.
 
 ### Étapes d'installation sur chaque poste :
@@ -49,7 +50,11 @@ Chaque poste doit être configuré individuellement pour garantir l'isolation et
    - `VITE_AGENT_KEY` : Clé secrète de la station (sera hashée en BDD lors du premier lancement).
    - `VITE_SERVER_URL` : URL du Station Server configuré à l'étape 1.
 
-3. **Lancement Automatisé** :
+3. **Génération de l'Installateur** :
+   - Double-cliquez sur **`PREPARE_INSTALLER.bat`** à la racine pour générer l'exécutable Windows.
+   - Le fichier `.exe` sera créé dans `YOOL_Station_App/yool-station-agent/release/`.
+
+4. **Lancement Automatisé** :
    - Double-cliquez sur **`INSTALL_AUTO_RUN.bat`** à la racine pour ajouter l'agent au démarrage de Windows.
 
 ---
