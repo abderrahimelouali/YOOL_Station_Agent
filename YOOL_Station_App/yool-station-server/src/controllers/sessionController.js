@@ -15,6 +15,7 @@ const axios = require('axios');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const db = require('../config/database');
+const ssoModule = require('./ssoController'); // Integration Module 6 (SSO)
 
 /**
  * PROXY DE VÉRIFICATION DE CARTE
@@ -109,8 +110,7 @@ exports.startSession = async (req, res) => {
         }
 
         const stationId = stations[0].id;
-        const sessionUuid = crypto.randomUUID(); // ID unique pour cette session
-        const jti = crypto.randomUUID();         // ID unique pour le jeton SSO (Anti-rejeu)
+        const sessionUuid = crypto.randomUUID(); // ID unique pour cette session (Module 2)
 
         // --- NOUVEAU : Mise à jour de l'activité (last_seen) ---
         await db.query('UPDATE stations SET last_seen = NOW() WHERE station_code = ?', [station_code]);
@@ -121,23 +121,10 @@ exports.startSession = async (req, res) => {
             [sessionUuid, stationId, student_id, card_uid, 'active']
         );
 
-        // 2. Construction du Payload JWT (SSO)
-        const tokenPayload = {
-            iss: 'yool-station-server',
-            aud: process.env.JWT_AUDIENCE || 'yool-platform',
-            jti: jti,
-            sub: student_id,
-            sid: sessionUuid // Utilisé pour le logout synchronisé
-        };
+        // 2. Integration Module 6 (SSO) : Génération du Token
+        const token = await ssoModule.generateSSOToken(student_id, sessionUuid);
 
-        const secret = process.env.JWT_SECRET || 'yool_default_secret_key';
-        const token = jwt.sign(tokenPayload, secret, { expiresIn: '60s' }); // Validité courte de 60s
-
-        // 3. Stockage du JTI pour éviter qu'un jeton soit utilisé deux fois
-        const expiresAt = new Date(Date.now() + 60 * 1000);
-        await db.query('INSERT INTO used_jtis (jti, expires_at) VALUES (?, ?)', [jti, expiresAt]);
-
-        // Audit log
+        // Audit log (Module 2)
         await db.query('INSERT INTO station_logs (station_id, log_type, category, message) VALUES (?, ?, ?, ?)',
             [stationId, 'info', 'auth', `Session ouverte: ${student_name || student_id}`]);
 
@@ -174,32 +161,8 @@ exports.endSession = async (req, res) => {
             ['completed', session_uuid, 'active']
         );
 
-        // 2. Webhook de déconnexion (Synchronisation Cloud)
-        const logoutUrlRaw = process.env.PLATFORM_LOGOUT_URL;
-
-        if (logoutUrlRaw) {
-            /**
-             * LOGIQUE HTTPS vs HTTP (Production)
-             * En production, décommentez la ligne avec https:// et supprimez/commentez le http://
-             */
-            let finalLogoutUrl = logoutUrlRaw; // Valeur du .env par défaut
-
-            // --- CONFIGURATION PRODUCTION (HTTPS) ---
-            // finalLogoutUrl = logoutUrlRaw.replace('http://', 'https://'); // FORCE HTTPS
-            // -----------------------------------------
-
-            const secret = process.env.JWT_SECRET || 'yool_default_secret_key';
-            const logoutToken = jwt.sign({
-                iss: 'yool-station-server',
-                action: 'logout',
-                sid: session_uuid
-            }, secret, { expiresIn: '1m' });
-
-            // Envoi de la requête de déconnexion en arrière-plan
-            axios.get(`${finalLogoutUrl}?token=${logoutToken}`)
-                .then(r => console.log(`[SYNC] Logout OK: ${session_uuid}`))
-                .catch(e => console.error(`[SYNC] Logout FAILED: ${e.message}`));
-        }
+        // 2. Integration Module 6 (SSO) : Synchronisation Déconnexion
+        await ssoModule.syncLogout(session_uuid);
 
         res.json({ success: true, message: 'Session close' });
 

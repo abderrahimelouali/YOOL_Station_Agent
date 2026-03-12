@@ -29,7 +29,7 @@ Pour simplifier l'utilisation quotidienne, utilisez les scripts situés à la ra
 2.  **`STOP_ALL.bat`** : Double-cliquez pour arrêter tous les processus YOOL (Agent + Serveur).
 3.  **`INSTALL_AUTO_RUN.bat`** : Configure Windows pour lancer l'application automatiquement au démarrage.
 
-👉 **[SETUP_GUIDE.md](./docs/SETUP_GUIDE.md)** | **[TECHNICAL_DEPLOYMENT.md](./docs/TECHNICAL_DEPLOYMENT.md)** | **[DOCUMENTATION.md](./docs/DOCUMENTATION.md)**
+👉 **[SETUP_GUIDE.md](./docs/SETUP_GUIDE.md)** | **[TECHNICAL_DEPLOYMENT.md](./docs/TECHNICAL_DEPLOYMENT.md)** | **[CAHIER_DES_CHARGES_MODULE2.md](./docs/CAHIER_DES_CHARGES_MODULE2.md)** | **[CAHIER_DES_CHARGES_MODULE6.md](./docs/CAHIER_DES_CHARGES_MODULE6.md)** | **[DOCUMENTATION.md](./docs/DOCUMENTATION.md)**
 
 ---
 

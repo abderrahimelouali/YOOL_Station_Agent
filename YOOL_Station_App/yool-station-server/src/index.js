@@ -58,8 +58,8 @@ app.use((err, req, res, next) => {
 });
 
 /**
- * TÂCHES DE MAINTENANCE AUTOMATIQUES
- * ----------------------------------
+ * MODULE 6 (SSO) - MAINTENANCE AUTOMATIQUE
+ * --------------------------------------
  * TTL Cleanup : Supprime les jetons JTI expirés de la base de données 
  * toutes les 5 minutes pour éviter l'engorgement de la table.
  */
