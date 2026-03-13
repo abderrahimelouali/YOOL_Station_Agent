@@ -28,7 +28,7 @@ if %errorlevel% neq 0 (
     echo Verifiez vos identifiants ou si la base existe deja.
 ) else (
     echo.
-    echo ✅ Base de donnees 'yool_station_db' cree avec succes !
+    echo ✅ Base de donnees 'yool_station_agent' cree avec succes !
 )
 
 echo.
