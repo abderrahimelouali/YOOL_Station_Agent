@@ -71,6 +71,7 @@ Le Station Server agit comme un relais (Proxy) sécurisé entre l'Agent UI et le
 ## 3. Guide d'Installation (Manuel)
 - Node.js (v16+)
 - MySQL
+- **Mode Développeur Windows** (Activé dans les paramètres système)
 - Electron (inclus dans les dépendances)
 
 3.  Configurez la sécurité et l'intégration :

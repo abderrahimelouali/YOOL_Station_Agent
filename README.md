@@ -8,6 +8,7 @@ Ce guide est conçu pour vous aider à installer et lancer la station **YOOL** e
 Assurez-vous que ces deux programmes sont installés sur votre ordinateur :
 1.  **Node.js (v18+)** : [Télécharger ici](https://nodejs.org/) (Prendre la version "LTS").
 2.  **MySQL (v8.0+)** : [Télécharger ici](https://dev.mysql.com/downloads/installer/).
+3.  **Mode Développeur Windows** : Allez dans `Paramètres > Mise à jour et sécurité > Pour les développeurs` et activez le **Mode développeur**.
 
 ---
 

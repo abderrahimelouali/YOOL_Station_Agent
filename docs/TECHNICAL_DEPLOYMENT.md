@@ -9,6 +9,7 @@ Le **Station Server** agit comme un proxy sécurisé. Il doit être installé su
 
 - **Runtime** : Node.js v16.x ou supérieur.
 - **Base de données** : MySQL 8.0+.
+- **Windows** : Le **Mode Développeur** doit être activé dans les paramètres système pour permettre la création de liens symboliques et l'accès aux APIs natives lors du build.
 - **Dépendances** : `npm install` dans le dossier `YOOL_Station_App/yool-station-server`.
 
 ### Configuration de la Base de Données
