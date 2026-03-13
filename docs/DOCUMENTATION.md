@@ -131,6 +131,8 @@ Pour activer la station :
 ### Étape 4 : Maintenance (Arrêt total)
 Pour arrêter proprement tous les services (Serveur + Agent), **double-cliquez** sur `YOOL_Station_App/stop_all.bat`.
 
+> [!IMPORTANT]
+> **Rappel de Build** : L'exécutable Windows est un "instantané" du code. Après chaque modification de code ou de fichier `.env` de l'agent, relancez toujours **`PREPARE_INSTALLER.bat`** pour distribuer la version mise à jour.
 ---
 
 ---

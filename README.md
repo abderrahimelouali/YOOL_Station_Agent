@@ -37,6 +37,9 @@ Pour créer le programme final pour Windows :
 2.  Attendez quelques minutes. Un fichier **`.exe`** sera créé.
 3.  Vous pouvez trouver l'installateur dans : `YOOL_Station_App/yool-station-agent/release/`.
 
+> [!IMPORTANT]
+> **Important** : Si vous modifiez le code ou le fichier `.env`, vous devez impérativement relancer **`PREPARE_INSTALLER.bat`** pour mettre à jour votre fichier `.exe`.
+
 ---
 
 ## 🚀 Étape 5 : Lancer et Travailler

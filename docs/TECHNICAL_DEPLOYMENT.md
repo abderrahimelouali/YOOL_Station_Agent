@@ -55,6 +55,9 @@ Chaque poste doit être configuré individuellement pour garantir l'isolation et
    - Double-cliquez sur **`PREPARE_INSTALLER.bat`** à la racine pour générer l'exécutable Windows.
    - Le fichier `.exe` sera créé dans `YOOL_Station_App/yool-station-agent/release/`.
 
+> [!WARNING]
+> Toute modification du code source ou des fichiers de configuration nécessite une nouvelle exécution de **`PREPARE_INSTALLER.bat`** pour être prise en compte dans l'agent installé.
+
 4. **Lancement Automatisé** :
    - Double-cliquez sur **`INSTALL_AUTO_RUN.bat`** à la racine pour ajouter l'agent au démarrage de Windows.
 
