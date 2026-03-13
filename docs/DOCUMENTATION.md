@@ -37,7 +37,7 @@ La YOOL Station utilise une base de données MySQL pour gérer l'état et la sé
     - `expires_at` : Date d'expiration.
 
 > [!TIP]
-> Utilisez le script `database/setup_database.sql` pour créer automatiquement la base de données et toutes ces tables.
+> **Méthode Simplifiée** : Utilisez le script **`SETUP_DATABASE.bat`** à la racine du projet pour créer automatiquement la base de données et toutes ces tables sans taper de commandes SQL.
 
 ---
 
@@ -73,15 +73,6 @@ Le Station Server agit comme un relais (Proxy) sécurisé entre l'Agent UI et le
 - MySQL
 - Electron (inclus dans les dépendances)
 
-### Configuration du Serveur (Station Server)
-1.  Copiez `.env.example` vers `.env` dans le dossier `YOOL_Station_App/yool-station-server`.
-2.  Configurez vos identifiants MySQL :
-    ```env
-    DB_HOST=localhost
-    DB_USER=root
-    DB_PASSWORD=votre_mot_de_passe
-    DB_NAME=yool_station_db
-    ```
 3.  Configurez la sécurité et l'intégration :
     ```env
     JWT_SECRET=votre_secret_jwt_32_chars_minimum
@@ -101,6 +92,7 @@ Conformément au cahier des charges, l'agent doit se lancer au démarrage pour v
 
 1.  **Configuration du Démarrage (Auto-Run)** :
     *   **Méthode Automatisée (RECOMMANDÉE)** : Double-cliquez sur `INSTALL_AUTO_RUN.bat` à la racine du projet. Cela créera le raccourci nécessaire dans votre dossier de démarrage Windows.
+    *   **Génération de l'Installateur** : Double-cliquez sur **`PREPARE_INSTALLER.bat`** à la racine pour générer votre exécutable Windows (`.exe`) prêt à l'emploi.
     *   **Méthode Manuelle** : Appuyez sur `Win + R`, tapez `shell:startup`, validez, et créez un raccourci vers `YOOL_Station_App/silent_launch.vbs`.
     *   Au redémarrage, le serveur et l'interface de scan se lanceront automatiquement en mode plein écran.
 
