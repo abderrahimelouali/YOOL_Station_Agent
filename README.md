@@ -1,59 +1,74 @@
-# YOOL Station Agent - Guide de Lancement Rapide 💎🚀
+# YOOL Station Agent - Guide de Configuration 💎🚀
 
-Ce guide est conçu pour vous aider à installer et lancer la station **YOOL** en 5 étapes simples, sans avoir besoin de connaissances en programmation.
-
----
-
-## 📋 Étape 1 : Prérequis (À faire une fois)
-Assurez-vous que ces deux programmes sont installés sur votre ordinateur :
-1.  **Node.js (v18+)** : [Télécharger ici](https://nodejs.org/) (Prendre la version "LTS").
-2.  **MySQL (v8.0+)** : [Télécharger ici](https://dev.mysql.com/downloads/installer/).
-3.  **Mode Développeur Windows** : Allez dans `Paramètres > Mise à jour et sécurité > Pour les développeurs` et activez le **Mode développeur**.
+Ce guide vous explique comment installer et lancer la station **YOOL** étape par étape.
 
 ---
 
-## 🗄️ Étape 2 : Configurer la Base de Données
-1.  Double-cliquez sur **`SETUP_DATABASE.bat`** à la racine de ce dossier.
-2.  Entrez votre nom d'utilisateur et mot de passe MySQL (généralement `root`).
-3.  Le script va créer automatiquement toutes les tables nécessaires.
+## 📋 Étape 1 : Prérequis
+Assurez-vous d'avoir installé :
+1.  **Node.js (LTS)** : [Lien de téléchargement](https://nodejs.org/)
+2.  **MySQL (XAMPP ou autre)** : [Lien de téléchargement](https://www.apachefriends.org/fr/index.html)
 
 ---
 
-## ⚙️ Étape 3 : Configuration Rapide (.env)
-Avant de lancer, vérifiez ces deux fichiers avec le Bloc-notes :
+## 🏁 Étape 2 : Installation
+Ouvrez un terminal et suivez ces commandes :
 
-1.  **Le Serveur** (`YOOL_Station_App/yool-station-server/.env`) :
-    - Remplissez `DB_USER` et `DB_PASSWORD` avec vos codes MySQL.
-    - Vérifiez que `CARD_SYSTEM_API_URL` pointe bien vers votre Backend principal.
+1.  **Cloner le projet** :
+    ```bash
+    git clone [URL_DU_DEPOT]
+    cd AgentPost
+    ```
 
-2.  **L'Agent** (`YOOL_Station_App/yool-station-agent/renderer/.env`) :
-    - Donnez un nom à votre poste (`VITE_STATION_ID`).
+2.  **Installer les composants** :
+    ```bash
+    # Installer le serveur
+    cd YOOL_Station_App/yool-station-server
+    npm install
 
----
-
-## 🛠️ Étape 4 : Préparer l'Application
-Pour créer le programme final pour Windows :
-1.  Double-cliquez sur **`PREPARE_INSTALLER.bat`** à la racine.
-2.  Attendez quelques minutes. Un fichier **`.exe`** sera créé.
-3.  Vous pouvez trouver l'installateur dans : `YOOL_Station_App/yool-station-agent/release/`.
-
-> [!IMPORTANT]
-> **Important** : Si vous modifiez le code ou le fichier `.env`, vous devez impérativement relancer **`PREPARE_INSTALLER.bat`** pour mettre à jour votre fichier `.exe`.
-
----
-
-## 🚀 Étape 5 : Lancer et Travailler
-Une fois installé :
-- **Pour démarrer** : Double-cliquez sur **`START_ALL.bat`**. Le serveur et l'agent se lancent tout seuls.
-- **Pour arrêter** : Double-cliquez sur **`STOP_ALL.bat`**.
-- **Lancement automatique** : Double-cliquez sur **`INSTALL_AUTO_RUN.bat`** pour que l'app se lance toute seule à chaque démarrage du PC.
+    # Installer l'agent
+    cd ../yool-station-agent
+    npm install
+    ```
 
 ---
 
-## 📚 Liens Utiles (Pour les Experts)
-- [Guide de Déploiement Kiosk](./docs/TECHNICAL_DEPLOYMENT.md)
-- [Documentation Technique Complète](./docs/DOCUMENTATION.md)
-- [Cahier des Charges Module 2](./docs/CAHIER_DES_CHARGES_MODULE2.md)
+## 🗄️ Étape 3 : Base de Données
+1.  Lancez **XAMPP** (ou votre outil MySQL) et allez sur **phpMyAdmin**.
+2.  Créez une base de données nommée `yool_station_agent`.
+3.  Ouvrez le fichier `database/setup_database.sql` (dans le dossier du projet).
+4.  Copiez tout le contenu et collez-le dans l'onglet **SQL** de phpMyAdmin, puis cliquez sur **Exécuter**.
 
 ---
-*Fait avec ❤️ pour une gestion client simplifiée.*
+
+## ⚙️ Étape 4 : Configuration (.env)
+Vérifiez ces deux fichiers avec un éditeur de texte :
+
+1.  **Serveur** (`YOOL_Station_App/yool-station-server/.env`) : Configurez `DB_USER`, `DB_PASSWORD` et `CARD_SYSTEM_API_URL`.
+2.  **Agent** (`YOOL_Station_App/yool-station-agent/renderer/.env`) : Modifiez `VITE_STATION_ID` (ex: POSTE-01).
+
+---
+
+## 🛠️ Étape 5 : Lancement et Build
+### Mode Test (Développement)
+Pour tester si tout fonctionne sans erreur :
+```bash
+# Dans le dossier yool-station-server
+npm run dev
+
+# Dans le dossier yool-station-agent
+npm run dev
+```
+
+### Création du programme (.exe)
+**Avant de commencer** : Activez le **Mode Développeur** dans Windows (`Paramètres > Mise à jour et sécurité > Pour les développeurs`).
+
+Pour générer le fichier exécutable final :
+```bash
+cd YOOL_Station_App/yool-station-agent
+npm run build
+```
+Le fichier **`.exe`** sera disponible dans : `YOOL_Station_App/yool-station-agent/release/`.
+
+---
+*Fait avec ❤️ pour le projet YOOL Card System.*
