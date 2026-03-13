@@ -5,8 +5,8 @@
 -- ############################################################################
 
 -- 1. Création de la base de données
-CREATE DATABASE IF NOT EXISTS yool_station_db;
-USE yool_station_db;
+CREATE DATABASE IF NOT EXISTS yool_station_agent;
+USE yool_station_agent;
 
 -- 2. Table des stations (postes)
 CREATE TABLE IF NOT EXISTS stations (
