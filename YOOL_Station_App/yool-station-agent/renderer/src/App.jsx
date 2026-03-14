@@ -245,7 +245,11 @@ function App() {
         applyStatus("error", serverMsg || t.pending_station);
       } else if (code === 404) {
         applyStatus("not_found");
+      } else if (serverMsg && code >= 400) {
+        // Erreur serveur précise (ex: Erreur base de données, Erreur Card System)
+        applyStatus("error", serverMsg);
       } else {
+        // Vraie erreur réseau (Serveur éteint, introuvable)
         applyStatus("error", t.network_error);
       }
 
