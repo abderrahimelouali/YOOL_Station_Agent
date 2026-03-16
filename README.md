@@ -14,8 +14,8 @@ Ce guide détaille les étapes manuelles d'installation et de lancement pour l'e
 
 1.  **Cloner le projet** :
     ```bash
-    git clone [URL_DU_DEPOT]
-    cd AgentPost
+    git clone https://github.com/abderrahimlouali/YOOL_Station_Agent.git
+    cd YOOL_Station_Agent
     ```
 
 2.  **Installer les composants du Serveur** :
@@ -32,23 +32,29 @@ Ce guide détaille les étapes manuelles d'installation et de lancement pour l'e
     - Allez dans l'onglet **SQL**, copiez tout le contenu du fichier `database/setup_database.sql` du projet, collez-le, et cliquez sur **Exécuter**.
 
 4.  **Configuration Serveur (.env)** :
-    - Dans le dossier `yool-station-server`, copiez (ou renommez) le fichier `.env.example` en **`.env`**.
-    - Modifiez le fichier `.env` pour y insérer vos paramètres MySQL (`DB_USER`, `DB_PASSWORD`).
+    - Dans le dossier `YOOL_Station_App/yool-station-server`, copiez le fichier `.env.example` et renommez la copie en **`.env`**.
+    - Modifiez le fichier `.env` pour y insérer vos **variables principales** :
+      * `DB_USER` et `DB_PASSWORD` : Identifiants de votre base de données locale (souvent `root` et vide sur XAMPP).
+      * `CARD_SYSTEM_API_URL` : URL de l'API centrale (ex: `http://127.0.0.1:3001/api`).
+      * `CARD_SYSTEM_MASTER_SECRET` : Le mot de passe réseau (doit être identique au backend principal).
 
 ---
 
 ## 💻 Étape 3 : Installation de l'Agent
 
 1.  **Installer les composants de l'Agent** :
+    - Ouvrez un *nouveau* terminal à la racine (`YOOL_Station_Agent`) ou revenez en arrière (`cd ../..`).
     ```bash
-    cd ../yool-station-agent
+    cd YOOL_Station_App/yool-station-agent
     npm i
     npm audit fix # Exécuter si nécessaire
     ```
 
 2.  **Configuration Agent (.env)** :
-    - Dans le dossier `yool-station-agent/renderer/`, copiez le fichier `.env.example` en **`.env`**.
-    - Modifiez `VITE_STATION_ID` si besoin.
+    - Dans le dossier `YOOL_Station_App/yool-station-agent/renderer/`, copiez le fichier `.env.example` et renommez la copie en **`.env`**.
+    - Modifiez vos **variables principales** :
+      * `VITE_STATION_ID` : L'identifiant physique de cette machine (ex: `STATION_0001`).
+      * `VITE_STATION_LOCAL_KEY` : La clé locale de sécurité de cette machine.
 
 ---
 
