@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS stations (
   name VARCHAR(100), -- Nom lisible
   location VARCHAR(100), -- Emplacement physique
   ip_address VARCHAR(45), -- IPv4 ou IPv6
-  agent_key_hash VARCHAR(255) UNIQUE, -- store hash not plain key
+  station_local_key_hash VARCHAR(255) UNIQUE, -- store hash not plain key
   status ENUM('pending', 'online', 'offline', 'maintenance') DEFAULT 'pending',
   last_seen TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
