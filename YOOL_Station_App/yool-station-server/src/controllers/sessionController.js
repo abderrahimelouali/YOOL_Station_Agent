@@ -71,7 +71,7 @@ exports.verifyProxy = async (req, res) => {
 
         // 4. Relais vers le Backend Principal (Card System)
         const cardSystemUrl = process.env.CARD_SYSTEM_API_URL;
-        const serverSecret = process.env.CARD_SYSTEM_MASTER_SECRET;
+        const serverSecret = process.env.AGENT_KEY;
 
         const response = await axios.post(`${cardSystemUrl}/cards/verify`, {
             card_identifier,

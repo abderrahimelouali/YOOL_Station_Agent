@@ -36,7 +36,7 @@ Ce guide détaille les étapes manuelles d'installation et de lancement pour l'e
     - Modifiez le fichier `.env` pour y insérer vos **variables principales** :
       * `DB_USER` et `DB_PASSWORD` : Identifiants de votre base de données locale (souvent `root` et vide sur XAMPP).
       * `CARD_SYSTEM_API_URL` : URL de l'API centrale (ex: `http://127.0.0.1:3001/api`).
-      * `CARD_SYSTEM_MASTER_SECRET` : Le mot de passe réseau (doit être identique au backend principal).
+      * `AGENT_KEY` : Le mot de passe réseau (doit être identique au backend principal).
 
 ---
 
