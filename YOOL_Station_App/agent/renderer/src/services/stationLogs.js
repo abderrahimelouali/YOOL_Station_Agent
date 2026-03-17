@@ -14,11 +14,11 @@ const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000/api';
  * Envoie désormais les données au backend.
  */
 
-export const startSession = async (cardId, stationId, studentId, studentName, stationLocalKey) => {
+export const startSession = async (cardId, stationId, studentId, studentName, agentKey) => {
     try {
         const response = await axios.post(`${API_URL}/sessions/start`, {
             station_code: stationId,
-            station_local_key: stationLocalKey,
+            agent_key: agentKey,
             card_uid: cardId,
             student_id: studentId,
             student_name: studentName

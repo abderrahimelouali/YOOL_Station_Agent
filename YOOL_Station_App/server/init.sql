@@ -11,7 +11,7 @@ CREATE TABLE IF NOT EXISTS stations (
     id VARCHAR(50) PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
     location VARCHAR(255),
-    station_local_key VARCHAR(255) UNIQUE NOT NULL,
+    agent_key VARCHAR(255) UNIQUE NOT NULL,
     status ENUM('active', 'inactive', 'pending') DEFAULT 'pending',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     last_seen TIMESTAMP NULL DEFAULT NULL
@@ -58,8 +58,8 @@ CREATE TABLE IF NOT EXISTS station_sessions (
 -- =============================================================================
 
 -- Insertion d'une station de test
-INSERT INTO stations (id, name, location, station_local_key, status, last_seen) 
-VALUES ('STATION_0001', 'Station de Test', 'Salle A101', 'demo_station_local_key_001', 'active', NOW())
+INSERT INTO stations (id, name, location, agent_key, status, last_seen) 
+VALUES ('STATION_0001', 'Station de Test', 'Salle A101', 'demo_agent_key_001', 'active', NOW())
 ON DUPLICATE KEY UPDATE last_seen = NOW();
 
 -- Insertion de cartes de test avec différents statuts

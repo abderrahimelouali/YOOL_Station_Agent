@@ -2,10 +2,10 @@ import axios from "axios";
 
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3000/api";
 
-export const verifyCard = async (cardId, stationCode, stationLocalKey, workspaceId) => {
+export const verifyCard = async (cardId, stationCode, agentKey, workspaceId) => {
   const payload = {
     station_code: stationCode,
-    station_local_key: stationLocalKey,
+    agent_key: agentKey,
     card_identifier: cardId,
     workspace_id: workspaceId,
   };

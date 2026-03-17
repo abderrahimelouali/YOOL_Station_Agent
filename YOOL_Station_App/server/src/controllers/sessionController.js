@@ -24,25 +24,25 @@ const ssoModule = require('./ssoController'); // Integration Module 6 (SSO)
  * de la station (Agent Key), et relaie la demande au Card System (Backend Principal).
  */
 exports.verifyProxy = async (req, res) => {
-    const { station_code, station_local_key, card_identifier, workspace_id } = req.body;
+    const { station_code, agent_key, card_identifier, workspace_id } = req.body;
 
     // Validation des entrées obligatoires
-    if (!station_code || !station_local_key || !card_identifier) {
+    if (!station_code || !agent_key || !card_identifier) {
         return res.status(400).json({ success: false, message: 'Données de vérification manquantes' });
     }
 
     try {
         // 1. Authentification et Auto-enregistrement de la station
-        let stations = await db.query('SELECT station_local_key_hash, status FROM stations WHERE station_code = ?', [station_code]);
+        let stations = await db.query('SELECT agent_key_hash, status FROM stations WHERE station_code = ?', [station_code]);
 
         // Si la station est nouvelle, on l'inscrit automatiquement en mode 'pending'
         if (stations.length === 0) {
-            const hash = await bcrypt.hash(station_local_key, 10);
+            const hash = await bcrypt.hash(agent_key, 10);
             const defaultLocation = (process.env.DEFAULT_STATION_LOCATION || 'Inconnue').trim();
             console.log(`[AUTH] Auto-enregistrement nouvelle station: ${station_code}`);
 
             await db.query(
-                'INSERT INTO stations (station_code, station_local_key_hash, status, location) VALUES (?, ?, ?, ?)',
+                'INSERT INTO stations (station_code, agent_key_hash, status, location) VALUES (?, ?, ?, ?)',
                 [station_code, hash, 'pending', defaultLocation]
             );
 
@@ -56,7 +56,7 @@ exports.verifyProxy = async (req, res) => {
         const station = stations[0];
 
         // 2. Vérification de la clé de l'agent (Bcrypt)
-        const isMatch = await bcrypt.compare(station_local_key, station.station_local_key_hash);
+        const isMatch = await bcrypt.compare(agent_key, station.agent_key_hash);
         if (!isMatch) {
             return res.status(401).json({ success: false, message: 'Clé agent invalide' });
         }
@@ -96,16 +96,16 @@ exports.verifyProxy = async (req, res) => {
  * Enregistre le début d'une session locale et crée le jeton JWT pour le SSO.
  */
 exports.startSession = async (req, res) => {
-    const { station_code, station_local_key, card_uid, student_id, student_name } = req.body;
+    const { station_code, agent_key, card_uid, student_id, student_name } = req.body;
 
-    if (!station_code || !station_local_key || !card_uid || !student_id) {
+    if (!station_code || !agent_key || !card_uid || !student_id) {
         return res.status(400).json({ success: false, message: 'Données incomplètes' });
     }
 
     try {
         // Authentification de la station
-        const stations = await db.query('SELECT id, station_local_key_hash, status FROM stations WHERE station_code = ?', [station_code]);
-        if (stations.length === 0 || !(await bcrypt.compare(station_local_key, stations[0].station_local_key_hash))) {
+        const stations = await db.query('SELECT id, agent_key_hash, status FROM stations WHERE station_code = ?', [station_code]);
+        if (stations.length === 0 || !(await bcrypt.compare(agent_key, stations[0].agent_key_hash))) {
             return res.status(401).json({ success: false, message: 'Station non identifiée' });
         }
 
@@ -178,13 +178,13 @@ exports.endSession = async (req, res) => {
  * Permet aux stations d'indiquer qu'elles sont toujours en ligne et actives.
  */
 exports.heartbeat = async (req, res) => {
-    const { station_code, station_local_key } = req.body;
+    const { station_code, agent_key } = req.body;
 
-    if (!station_code || !station_local_key) return res.status(400).json({ success: false });
+    if (!station_code || !agent_key) return res.status(400).json({ success: false });
 
     try {
-        const stations = await db.query('SELECT station_local_key_hash FROM stations WHERE station_code = ?', [station_code]);
-        if (stations.length > 0 && await bcrypt.compare(station_local_key, stations[0].station_local_key_hash)) {
+        const stations = await db.query('SELECT agent_key_hash FROM stations WHERE station_code = ?', [station_code]);
+        if (stations.length > 0 && await bcrypt.compare(agent_key, stations[0].agent_key_hash)) {
             await db.query('UPDATE stations SET last_seen = NOW() WHERE station_code = ?', [station_code]);
             return res.json({ success: true });
         }

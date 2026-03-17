@@ -20,7 +20,7 @@ Ce guide détaille les étapes manuelles d'installation et de lancement pour l'e
 
 2.  **Installer les composants du Serveur** :
     ```bash
-    cd YOOL_Station_App/yool-station-server
+    cd YOOL_Station_App/server
     npm i
     npm audit fix # Exécuter en cas de failles signalées
     ```
@@ -32,7 +32,7 @@ Ce guide détaille les étapes manuelles d'installation et de lancement pour l'e
     - Allez dans l'onglet **SQL**, copiez tout le contenu du fichier `database/setup_database.sql` du projet, collez-le, et cliquez sur **Exécuter**.
 
 4.  **Configuration Serveur (.env)** :
-    - Dans le dossier `YOOL_Station_App/yool-station-server`, copiez le fichier `.env.example` et renommez la copie en **`.env`**.
+    - Dans le dossier `YOOL_Station_App/server`, copiez le fichier `.env.example` et renommez la copie en **`.env`**.
     - Modifiez le fichier `.env` pour y insérer vos **variables principales** :
       * `DB_USER` et `DB_PASSWORD` : Identifiants de votre base de données locale (souvent `root` et vide sur XAMPP).
       * `CARD_SYSTEM_API_URL` : URL de l'API centrale (ex: `http://127.0.0.1:3001/api`).
@@ -45,16 +45,16 @@ Ce guide détaille les étapes manuelles d'installation et de lancement pour l'e
 1.  **Installer les composants de l'Agent** :
     - Ouvrez un *nouveau* terminal à la racine (`YOOL_Station_Agent`) ou revenez en arrière (`cd ../..`).
     ```bash
-    cd YOOL_Station_App/yool-station-agent
+    cd YOOL_Station_App/agent
     npm i
     npm audit fix # Exécuter si nécessaire
     ```
 
 2.  **Configuration Agent (.env)** :
-    - Dans le dossier `YOOL_Station_App/yool-station-agent/renderer/`, copiez le fichier `.env.example` et renommez la copie en **`.env`**.
+    - Dans le dossier `YOOL_Station_App/agent/renderer/`, copiez le fichier `.env.example` et renommez la copie en **`.env`**.
     - Modifiez vos **variables principales** :
       * `VITE_STATION_ID` : L'identifiant physique de cette machine (ex: `STATION_0001`).
-      * `VITE_STATION_LOCAL_KEY` : La clé locale de sécurité de cette machine.
+      * `VITE_AGENT_KEY` : La clé locale de sécurité de cette machine.
 
 ---
 
@@ -65,15 +65,20 @@ Ouvrez **deux terminaux** différents.
 
 **Terminal 1 (Serveur)** :
 ```bash
-cd YOOL_Station_App/yool-station-server
+cd YOOL_Station_App/server
 npm run dev
 ```
 
 **Terminal 2 (Agent)** :
 ```bash
-cd YOOL_Station_App/yool-station-agent
+cd YOOL_Station_App/agent
 npm run dev
 ```
+
+### 👻 Option 2 : Lancement Silencieux (VBS)
+Si vous ne voulez pas garder de terminaux ouverts, vous pouvez lancer l'Agent et le Serveur en arrière-plan :
+- Double-cliquez sur le fichier `YOOL_Station_App/silent_launch.vbs`.
+*(Pour les arrêter, double-cliquez sur `YOOL_Station_App/stop_all.bat` ou tapez `taskkill /F /IM node.exe` dans un terminal).*
 
 ---
 
@@ -83,10 +88,10 @@ npm run dev
 
 Pour générer le fichier exécutable qui sera installé sur les stations :
 ```bash
-cd YOOL_Station_App/yool-station-agent
+cd YOOL_Station_App/agent
 npm run build
 ```
-L'installateur final **`.exe`** sera généré et disponible dans le dossier : `YOOL_Station_App/yool-station-agent/release/`.
+L'installateur final **`.exe`** sera généré et disponible dans le dossier : `YOOL_Station_App/agent/release/`.
 
 ---
 *Fait avec ❤️ pour le projet YOOL Card System.*

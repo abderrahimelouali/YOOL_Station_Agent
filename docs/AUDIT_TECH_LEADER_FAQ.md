@@ -6,7 +6,7 @@ Ce document est votre "antisèche" pour l'audit de votre Tech Leader. Pour chaqu
 
 ### 1. Contexte & Objectif
 **Q : Comment garantissez-vous qu'un étudiant ne peut pas contourner l'agent ?**
-*   **Réponse** : L'agent est en mode "Kiosk" natif (`mainWindow.setKiosk(true)`). Tous les raccourcis système Windows (Alt+Tab, Alt+F4, Touche Windows) sont interceptés et bloqués via `globalShortcut` dans `yool-station-agent/main/index.js`. L'application est configurée pour être `alwaysOnTop` (toujours au premier plan).
+*   **Réponse** : L'agent est en mode "Kiosk" natif (`mainWindow.setKiosk(true)`). Tous les raccourcis système Windows (Alt+Tab, Alt+F4, Touche Windows) sont interceptés et bloqués via `globalShortcut` dans `agent/main/index.js`. L'application est configurée pour être `alwaysOnTop` (toujours au premier plan).
 
 ---
 
@@ -24,7 +24,7 @@ Ce document est votre "antisèche" pour l'audit de votre Tech Leader. Pour chaqu
 
 ### 4. Architecture Technique
 **Q : Pourquoi ce choix technologique (Electron + Node) ?**
-*   **Réponse** : Electron permet un contrôle total sur l'OS (verrouillage matériel) tout en utilisant des technologies web modernes (React/Vite). Node.js côté serveur (`yool-station-server`) assure une communication asynchrone rapide et une gestion robuste des logs MySQL.
+*   **Réponse** : Electron permet un contrôle total sur l'OS (verrouillage matériel) tout en utilisant des technologies web modernes (React/Vite). Node.js côté serveur (`server`) assure une communication asynchrone rapide et une gestion robuste des logs MySQL.
 
 ---
 

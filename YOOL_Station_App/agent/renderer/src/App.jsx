@@ -11,7 +11,7 @@ import QRScanner from "./components/QRScanner";
  * Extraite des variables d'environnement (Vite)
  */
 const STATION_ID = import.meta.env.VITE_STATION_ID || "STATION_0001";
-const STATION_LOCAL_KEY = import.meta.env.VITE_STATION_LOCAL_KEY || "";
+const AGENT_KEY = import.meta.env.VITE_AGENT_KEY || "";
 const USE_VERIFY = String(import.meta.env.VITE_USE_VERIFY_API || "true") === "true";
 const INACTIVITY_TIMEOUT = Number(import.meta.env.VITE_INACTIVITY_TIMEOUT || 15);
 const PLATFORM_URL = import.meta.env.VITE_PLATFORM_URL || "https://certifications.web4jobs.ma/"
@@ -186,7 +186,7 @@ function App() {
       }
 
       // 1. Appel au Proxy local (Station Server)
-      const verify = await verifyCard(cardId, STATION_ID, STATION_LOCAL_KEY);
+      const verify = await verifyCard(cardId, STATION_ID, AGENT_KEY);
 
       if (!verify?.success) {
         applyStatus("error", verify.message || "invalid_server_response");
@@ -208,7 +208,7 @@ function App() {
       const actualCardId = verify?.data?.card_id || verify?.card_id || cardId;
 
       // 3. ENREGISTREMENT DE SESSION (Backend Local)
-      const sessLog = await startSession(actualCardId, STATION_ID, studentId, studentName, STATION_LOCAL_KEY);
+      const sessLog = await startSession(actualCardId, STATION_ID, studentId, studentName, AGENT_KEY);
 
       if (sessLog) {
           setSession(sessLog);
@@ -239,7 +239,7 @@ function App() {
       const serverMsg = error?.response?.data?.message;
 
       if (code === 401) {
-        applyStatus("error", t.station_local_key_error);
+        applyStatus("error", t.agent_key_error);
       } else if (code === 403) {
         // Affiche le message explicatif du serveur (Station en attente, etc.)
         applyStatus("error", serverMsg || t.pending_station);
