@@ -76,7 +76,7 @@ exports.verifyProxy = async (req, res) => {
         const response = await axios.post(`${cardSystemUrl}/cards/verify`, {
             card_identifier,
             workspace_id,
-            master_secret: serverSecret
+            agent_key: serverSecret // <--- CORRECT
         });
 
         // On renvoie la réponse reçue directement à l'Agent UI
