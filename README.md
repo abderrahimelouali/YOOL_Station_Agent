@@ -36,16 +36,15 @@ Ce guide détaille les étapes manuelles d'installation et de lancement pour l'e
     - Modifiez le fichier `.env` pour y insérer vos **variables principales** :
       * `DB_USER` et `DB_PASSWORD` : Identifiants de votre base de données locale (souvent `root` et vide sur XAMPP).
       * `CARD_SYSTEM_API_URL` : URL de l'API centrale (ex: `http://127.0.0.1:3001/api`).
-      * `AGENT_KEY` : Le mot de passe réseau (doit être identique au backend principal).
+      * `STATION_KEY` : Le mot de passe réseau (doit être identique au backend principal).
 
 ---
 
 ## 💻 Étape 3 : Installation de l'Agent
 
 1.  **Installer les composants de l'Agent** :
-    - Ouvrez un *nouveau* terminal à la racine (`YOOL_Station_Agent`) ou revenez en arrière (`cd ../..`).
     ```bash
-    cd YOOL_Station_App/agent
+    cd ../agent
     npm i
     npm audit fix # Exécuter si nécessaire
     ```
@@ -54,7 +53,7 @@ Ce guide détaille les étapes manuelles d'installation et de lancement pour l'e
     - Dans le dossier `YOOL_Station_App/agent/renderer/`, copiez le fichier `.env.example` et renommez la copie en **`.env`**.
     - Modifiez vos **variables principales** :
       * `VITE_STATION_ID` : L'identifiant physique de cette machine (ex: `STATION_0001`).
-      * `VITE_AGENT_KEY` : La clé locale de sécurité de cette machine.
+      * `VITE_STATION_KEY` : La clé locale de sécurité de cette machine.
 
 ---
 

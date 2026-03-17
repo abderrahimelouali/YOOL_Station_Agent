@@ -122,4 +122,3 @@ location /sso/verify {
 
 ---
 **Document validé pour le déploiement.**  
-*Besoin d'aide supplémentaire ? Contactez l'administrateur système.*
